@@ -2,12 +2,6 @@
 
 AdminLTE 3 for Laravel 10.
 
-| Laravel Version | Branch |
-|:---------------:|:------:|
-| 10              | main   |
-| 9               | 9.x    |
-| 8               | 8.x    |
-
 ## Requirements
 
 - PHP >= 8.1.0
