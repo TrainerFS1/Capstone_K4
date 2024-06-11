@@ -13,8 +13,11 @@ class TransactionController extends Controller
 {
     public function index()
     {
+        $users = User::all();
+        $customers = Customer::all();
+        $packages = Package::all();
         $transactions = Transaction::all();
-        return view('transaction.index', compact('transactions'));  
+        return view('transaction.index', compact('transactions', 'users', 'customers', 'packages'));  
     }
 
     public function create()
@@ -41,31 +44,51 @@ class TransactionController extends Controller
     {
         // Validasi data yang diterima dari form
         $validatedData = $request->validate([
+            'transactionNumber' => 'required|string|max:255',
             'transactionDateTime' => 'required|date',
             'transactionStatus' => 'required|string|max:255',
-            'transactionPayment' => 'required|numeric',
-            'userEmail' => 'required|email',
+            'transactionPaymentMethod' => 'required|integer',
             'customer_id' => 'required|integer',
             'package_id' => 'required|integer',
         ]);
 
-        // Simpan data transaksi baru
-        Transaction::create($validatedData);
+        $userEmail = auth()->user()->userEmail;
 
-        return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil ditambahkan.');
+        // Simpan data transaksi baru
+        Transaction::create([
+            'transactionNumber' => $request->input('transactionNumber'),
+            'transactionDateTime' => $request->input('transactionDateTime'),
+            'transactionStatus' => $request->input('transactionStatus'),
+            'transactionPaymentMethod' => $request->input('transactionPaymentMethod'),
+            'userEmail' => $userEmail,
+            'customer_id' => $request->input('customer_id'),
+            'package_id' => $request->input('package_id'),
+        ]);
+
+        return redirect()->route('daftarTransaction')->with('success', 'Transaksi berhasil ditambahkan.');
+    }
+
+    public function edit($id)
+    {
+        $transaction = Transaction::findOrFail($id);
+        $customers = Customer::all();
+        $packages = Package::all();
+        return view('transaction.edit', compact('transaction', 'customers', 'packages'));
     }
 
     public function update(Request $request, $id)
     {
         // Validasi data yang diterima dari form
         $validatedData = $request->validate([
+            'transactionNumber' => 'required|string|max:255',
             'transactionDateTime' => 'required|date',
             'transactionStatus' => 'required|string|max:255',
-            'transactionPayment' => 'required|numeric',
-            'userEmail' => 'required|email',
+            'transactionPaymentMethod' => 'required|integer',
             'customer_id' => 'required|integer',
             'package_id' => 'required|integer',
         ]);
+
+        $userEmail = auth()->user()->userEmail;
 
         // Dapatkan transaksi yang akan diperbarui
         $transaction = Transaction::findOrFail($id);
@@ -73,6 +96,13 @@ class TransactionController extends Controller
         // Update data transaksi
         $transaction->update($validatedData);
 
-        return redirect()->route('transactions.index')->with('success', 'Transaksi berhasil diperbarui.');
+        return redirect()->route('daftarTransaction')->with('success', 'Transaksi berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        $transaction = Transaction::findOrFail($id);
+        $transaction->delete();
+        return redirect()->route('daftarTransaction')->with('success', 'Transaksi berhasil dihapus.');
     }
 }

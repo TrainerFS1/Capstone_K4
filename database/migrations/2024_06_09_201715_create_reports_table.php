@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reports', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            $table->string('reportID')->unique();
-            $table->unsignedBigInteger('transaction_id');
+            $table->id();
+            $table->string('reportNumber')->unique();
+            $table->string('transaction_id');
             $table->text('reportText');
 
             $table->foreign('transaction_id')->references('transactionNumber')->on('transactions')->onDelete('cascade');

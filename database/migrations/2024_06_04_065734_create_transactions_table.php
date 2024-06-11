@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             // Define columns
-            $table->id('transactionNumber'); 
+            $table->id();
+            $table->string('transactionNumber')->unique(); 
             $table->dateTime('transactionDateTime');
             $table->string('transactionStatus');
-            $table->decimal('transactionPayment', 10, 2); 
+            $table->integer('transactionPaymentMethod'); 
             $table->string('userEmail'); // Foreign Key
             $table->unsignedBigInteger('customer_id');
             $table->unsignedBigInteger('package_id'); // Foreign Key

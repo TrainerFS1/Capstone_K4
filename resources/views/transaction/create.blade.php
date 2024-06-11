@@ -56,10 +56,19 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="font-weight-bold">ID Paket</label>
-                                    <input type="number" class="form-control @error('package_id') is-invalid @enderror" name="package_id" value="{{ old('package_id') }}" placeholder="Masukkan ID Paket">
+                                    <select class="form-control @error('package_id') is-invalid @enderror" name="package_id">
+                                        <option value="">Pilih Paket</option>
+                                        @foreach ($packages as $package)
+                                            <option value="{{ $package->id }}">{{ $package->packageName }}</option>
+                                        @endforeach
+                                    </select>
                                     @error('package_id')
                                         <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror
+                                    <!-- <input type="number" class="form-control @error('package_id') is-invalid @enderror" name="package_id" value="{{ old('package_id') }}" placeholder="Masukkan ID Paket">
+                                    @error('package_id')
+                                        <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                    @enderror -->
                                 </div>
                                     
                         </div>
@@ -104,8 +113,8 @@
                                     <label class="font-weight-bold">Pembayaran Transaksi</label>
                                     <select class="form-control @error('transactionPaymentMethod') is-invalid @enderror" name="transactionPaymentMethod">
                                         <option value="">Pilih Metode Pembayaran</option>
-                                        <option value="cash">Cash</option>
-                                        <option value="transfer">Transfer</option>
+                                        <option value="1">Cash</option>
+                                        <option value="2">Transfer</option>
                                     </select>
                                     @error('transactionPaymentMethod')
                                         <div class="alert alert-danger mt-2">{{ $message }}</div>

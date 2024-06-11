@@ -1,5 +1,32 @@
 @extends('adminlte.layouts.app')
 
+@section('addJavascript')
+    <script src="{{ asset('js/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#article-table').DataTable();
+        });
+
+        function confirmDelete(button) {
+            var url = $(button).data('url');
+            console.log("URL Penghapusan:", url); // Membantu dalam pemecahan masalah
+            swal({
+                title: 'Konfirmasi Hapus',
+                text: 'Apakah Anda yakin ingin menghapus data ini?',
+                icon: 'warning',
+                dangerMode: true,
+                buttons: true,
+            }).then(function(willDelete) {
+                if (willDelete) {
+                    window.location = url;
+                }
+            });
+        }
+    </script>
+@endsection
+
 @section('content')
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -27,7 +54,7 @@
             <div class="card border-0 shadow-sm rounded">
                 <div class="card-body">
                     <a href="{{ route('createTransaction') }}" class="btn btn-md btn-success mb-3">TAMBAH TRANSAKSI</a>
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="article-table">
                         <thead>
                             <tr>
                                 <th>No</th>
@@ -36,8 +63,9 @@
                                 <th>Status Transaksi</th>
                                 <th>Pembayaran Transaksi</th>
                                 <th>Email Pengguna</th>
-                                <th>ID Pelanggan</th>
-                                <th>ID Paket</th>
+                                <th>Nama Pengguna</th>
+                                <th>Nama Pelanggan</th>
+                                <th>Nama Paket</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -48,17 +76,35 @@
                                     <td>{{ $transaction->transactionNumber }}</td>
                                     <td>{{ $transaction->transactionDateTime }}</td>
                                     <td>{{ $transaction->transactionStatus }}</td>
-                                    <td>{{ $transaction->transactionPayment }}</td>
-                                    <td>{{ $transaction->user_id }}</td>
-                                    <td>{{ $transaction->customer_id }}</td>
-                                    <td>{{ $transaction->package_id }}</td>
+                                    
+                                    @if ($transaction->transactionPaymentMethod == '1')
+                                        <td>Cash</td>
+                                    @elseif ($transaction->transactionPaymentMethod == '2')
+                                        <td>Transfer</td>
+                                    @endif
+                                    
+                                    <td>{{ $transaction->userEmail }}</td>
+                                    
+                                    @foreach ($users as $user)
+                                    @if ($transaction->userEmail == $user->userEmail)
+                                        <td>{{ $user->userFullName }}</td>
+                                    @endif
+                                    @endforeach
+                                    
+                                    @foreach ($customers as $customer)
+                                    @if ($transaction->customer_id == $customer->id)
+                                        <td>{{ $customer->customerName }}</td>
+                                    @endif
+                                    @endforeach
+
+                                    @foreach ($packages as $package)
+                                    @if ($transaction->package_id == $package->id)
+                                    <td>{{ $package->packageName }}</td>
+                                    @endif
+                                    @endforeach
                                     <td>
-                                        <a href="{{ route('transactions.edit', $transaction->transactionNumber) }}" class="btn btn-sm btn-primary">EDIT</a>
-                                        <form action="{{ route('transactions.destroy', $transaction->transactionNumber) }}" method="POST" style="display: inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
-                                        </form>
+                                        <a href="{{ route('editTransaction', $transaction->id) }}" class="btn btn-sm btn-primary">EDIT</a>
+                                        <a onclick="confirmDelete(this)" data-url="{{ route('deleteTransaction', ['id' => $transaction->id]) }}" class="btn btn-danger btn-sm" role="button">Hapus</a>
                                     </td>
                                 </tr>
                             @empty
