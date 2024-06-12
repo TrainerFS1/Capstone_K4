@@ -54,7 +54,30 @@
                                     </div>
 
                                 </div>
-                                <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="font-weight-bold">Paket & Harga</label>
+                                            <select class="form-control @error('package_id') is-invalid @enderror" name="package_id">
+                                            <option value="">Paket - Harga</option>
+                                            @foreach ($packages as $package)
+                                                <option value="{{ $package->id }}" {{ old('package_id', $transaction->package_id) == $package->id ? 'selected' : '' }}>{{ $package->packageName }} - {{ $package->packagePrice }}</option>
+                                            @endforeach
+                                            </select>
+                                            @error('package_id')
+                                                <div class="alert alert-danger mt-2">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="font-weight-bold">Jumlah</label>
+                                            <input type="text" class="form-control" @error('amount') is-invalid @enderror" 
+                                            placeholder="Masukkan Jumlah" name="amount" value="{{ old('amount', $transaction->amount) }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group">
                                     <label class="font-weight-bold">ID Paket</label>
                                     <select class="form-control @error('package_id') is-invalid @enderror" name="package_id">
                                         <option value="">Pilih Paket</option>
@@ -64,12 +87,12 @@
                                     </select>
                                     @error('package_id')
                                         <div class="alert alert-danger mt-2">{{ $message }}</div>
-                                    @enderror
+                                    @enderror -->
                                     <!-- <input type="number" class="form-control @error('package_id') is-invalid @enderror" name="package_id" value="{{ old('package_id') }}" placeholder="Masukkan ID Paket">
                                     @error('package_id')
                                         <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror -->
-                                </div>
+                                <!-- </div> -->
                                     
                         </div>
                     </div>
@@ -100,11 +123,14 @@
                                 {{-- Status Transaksi --}}
                                 <div class="form-group">
                                     <label class="font-weight-bold">Status Transaksi</label>
-                                    <select class="form-control @error('transactionStatus') is-invalid @enderror" name="transactionStatus">
+                                    <input type="text" class="form-control" value="{{ $transaction->transactionStatus }}" readonly>
+                                            <!-- Menyimpan nomor urut sebagai nilai default yang tidak bisa diubah oleh pengguna -->
+                                    <input type="hidden" name="transactionStatus" value="{{ $transaction->transactionStatus }}">
+                                    <!-- <select class="form-control @error('transactionStatus') is-invalid @enderror" name="transactionStatus">
                                         <option value="diterima" {{ old('transactionStatus', 'diterima') == 'diterima' ? 'selected' : '' }}>Diterima</option>
                                         <option value="diproses" {{ old('transactionStatus') == 'diproses' ? 'selected' : '' }}>Diproses</option>
                                         <option value="selesai" {{ old('transactionStatus') == 'selesai' ? 'selected' : '' }}>Selesai</option>
-                                    </select>
+                                    </select> -->
                                     @error('transactionStatus')
                                         <div class="alert alert-danger mt-2">{{ $message }}</div>
                                     @enderror

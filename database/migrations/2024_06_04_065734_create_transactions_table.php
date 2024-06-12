@@ -18,8 +18,10 @@ return new class extends Migration
             $table->dateTime('transactionDateTime');
             $table->string('transactionStatus');
             $table->integer('transactionPaymentMethod'); 
+            $table->integer('amount');
+            $table->integer('transactionTotal');
             $table->string('userEmail'); // Foreign Key
-            $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('customer_id'); // Foreign Key
             $table->unsignedBigInteger('package_id'); // Foreign Key
             
             // Define foreign key constraints
