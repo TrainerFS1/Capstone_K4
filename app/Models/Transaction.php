@@ -13,10 +13,12 @@ class Transaction extends Model
         'transactionNumber',
         'transactionDateTime',
         'transactionPaymentMethod',
-        'transactionTotalAmount',
+        'amount',
+        'transactionTotal',
         'transactionStatus',
         'userEmail',
         'customer_id',
         'package_id',
+        'transactionAmount',
     ];
 }

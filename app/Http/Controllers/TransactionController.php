@@ -37,7 +37,18 @@ class TransactionController extends Controller
         $packages = Package::all();
         $customers = Customer::all();
         $users = User::all();
-        return view('transaction.create', compact('transactionNumber', 'packages', 'customers'));  
+
+        // for ($package_id = 1; $package_id <= count($packages); $package_id++) {
+        //     $package = Package::find($package_id);
+        // }
+
+        // for ($i = 1; $i <= count($packages); $i++) {
+        //     if ($i == $package_id) {
+        //         $price = $package->packagePrice;
+        //     }
+        // }
+        
+        return view('transaction.create', compact('transactionNumber', 'packages', 'customers', 'users',));  
     }
 
     public function store(Request $request)
@@ -46,23 +57,30 @@ class TransactionController extends Controller
         $validatedData = $request->validate([
             'transactionNumber' => 'required|string|max:255',
             'transactionDateTime' => 'required|date',
+            'amount' => 'required|integer',
             'transactionStatus' => 'required|string|max:255',
             'transactionPaymentMethod' => 'required|integer',
             'customer_id' => 'required|integer',
             'package_id' => 'required|integer',
         ]);
-
+        
         $userEmail = auth()->user()->userEmail;
+        $package_id = $request->input('package_id');
+        $price = Package::find($package_id)->packagePrice;
+        $amount = $request->input('amount');
+        $transactionTotal = $amount * $price;
 
         // Simpan data transaksi baru
         Transaction::create([
             'transactionNumber' => $request->input('transactionNumber'),
             'transactionDateTime' => $request->input('transactionDateTime'),
             'transactionStatus' => $request->input('transactionStatus'),
+            'transactionTotal' => $transactionTotal,
+            'amount' => $amount,
             'transactionPaymentMethod' => $request->input('transactionPaymentMethod'),
             'userEmail' => $userEmail,
             'customer_id' => $request->input('customer_id'),
-            'package_id' => $request->input('package_id'),
+            'package_id' => $package_id,
         ]);
 
         return redirect()->route('daftarTransaction')->with('success', 'Transaksi berhasil ditambahkan.');
@@ -87,8 +105,6 @@ class TransactionController extends Controller
             'customer_id' => 'required|integer',
             'package_id' => 'required|integer',
         ]);
-
-        $userEmail = auth()->user()->userEmail;
 
         // Dapatkan transaksi yang akan diperbarui
         $transaction = Transaction::findOrFail($id);

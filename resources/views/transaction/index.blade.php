@@ -58,14 +58,16 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nomor Transaksi</th>
+                                <th>No.Transaksi</th>
                                 <th>Tanggal Waktu Transaksi</th>
                                 <th>Status Transaksi</th>
                                 <th>Pembayaran Transaksi</th>
-                                <th>Email Pengguna</th>
                                 <th>Nama Pengguna</th>
                                 <th>Nama Pelanggan</th>
                                 <th>Nama Paket</th>
+                                <th>Harga Paket</th>
+                                <th>Jumlah</th>
+                                <th>Total Harga</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -83,8 +85,6 @@
                                         <td>Transfer</td>
                                     @endif
                                     
-                                    <td>{{ $transaction->userEmail }}</td>
-                                    
                                     @foreach ($users as $user)
                                     @if ($transaction->userEmail == $user->userEmail)
                                         <td>{{ $user->userFullName }}</td>
@@ -100,8 +100,12 @@
                                     @foreach ($packages as $package)
                                     @if ($transaction->package_id == $package->id)
                                     <td>{{ $package->packageName }}</td>
+                                    <td>{{ $package->packagePrice }}</td>
                                     @endif
                                     @endforeach
+
+                                    <td>{{ $transaction->amount}}</td>
+                                    <td>{{ $transaction->transactionTotal }}</td>
                                     <td>
                                         <a href="{{ route('editTransaction', $transaction->id) }}" class="btn btn-sm btn-primary">EDIT</a>
                                         <a onclick="confirmDelete(this)" data-url="{{ route('deleteTransaction', ['id' => $transaction->id]) }}" class="btn btn-danger btn-sm" role="button">Hapus</a>
