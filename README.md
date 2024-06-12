@@ -2,11 +2,12 @@
 
 AdminLTE 3 for Laravel 10.
 
-| Laravel Version | Branch |
-|:---------------:|:------:|
-| 10              | main   |
-| 9               | 9.x    |
-| 8               | 8.x    |
+Capstone project milik Kelompok 4, dari kelas FS1.
+- Bunga Nailah Salsabilah
+- Dwika Lintang Nugraha
+- Khofifah Dharmasari
+- Muhamad Akbar Rudin
+- Naufal Zakariya
 
 ## Requirements
 
