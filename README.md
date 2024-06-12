@@ -1,6 +1,5 @@
 # Laravel 10 + AdminLTE 3
-
-AdminLTE 3 for Laravel 10.
+# AdminLTE 3 for Laravel 10.
 
 Capstone project milik Kelompok 4, dari kelas FS1.
 - Bunga Nailah Salsabilah
