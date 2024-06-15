@@ -71,7 +71,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="font-weight-bold">Jumlah</label>
-                                            <input type="text" class="form-control" @error('amount') is-invalid @enderror" 
+                                            <input type="text" class="form-control @error('amount') is-invalid @enderror" 
                                             placeholder="Masukkan Jumlah" name="amount" value="{{ old('amount') }}">
                                         </div>
                                     </div>

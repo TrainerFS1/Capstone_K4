@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('reportNumber')->unique();
             $table->string('transaction_id');
+            $table->string('customerName');
+            $table->string('reportImage');
             $table->text('reportText');
-
-            $table->foreign('transaction_id')->references('transactionNumber')->on('transactions')->onDelete('cascade');
             $table->timestamps();
         });
     }
