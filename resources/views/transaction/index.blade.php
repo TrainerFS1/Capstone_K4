@@ -107,7 +107,7 @@
                                     <td>{{ $transaction->amount}}</td>
                                     <td>{{ $transaction->transactionTotal }}</td>
                                     <td>
-                                        <a href="{{ route('editTransaction', $transaction->id) }}" class="btn btn-sm btn-primary">EDIT</a>
+                                        <a href="{{ route('editTransaction', $transaction->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                         <a onclick="confirmDelete(this)" data-url="{{ route('deleteTransaction', ['id' => $transaction->id]) }}" class="btn btn-danger btn-sm" role="button">Hapus</a>
                                     </td>
                                 </tr>

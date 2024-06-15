@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CustomerController;
@@ -8,8 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\LaundryController;
-use App\Models\Package;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,15 +20,26 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
+//Laundry
 Route::get('/', function () {
     return Redirect::to('/laundry');
 });
-Route::get('/laundry', [LaundryController::class, 'index']);
+Route::get('/laundry', [LaundryController::class, 'index'])->name('laundry');
 
+//Register
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
+//Customer Report
+Route::get('/report/create', [ReportController::class, 'create'])->name('createReport');
+Route::post('/report/create', [ReportController::class, 'store'])->name('storeReport');
+
+//Customer Transaction
+Route::get('/transaction/{id}/show', [TransactionController::class, 'show'])->name('showTransaction');
+
+//Admin
 Route::group(['middleware' => ['auth', 'Admin']], function () {
+
     // HomeController
     Route::get('/home', function () {
         return Redirect::to('/Admin');
@@ -46,7 +55,6 @@ Route::group(['middleware' => ['auth', 'Admin']], function () {
     Route::get('/customer/{id}/delete', [CustomerController::class, 'destroy'])->name('deleteCustomer');
 
     // PackageController
-
     Route::get('/package', [PackageController::class, 'index'])->name('daftarPackage');
     Route::get('/package/create', [PackageController::class, 'create'])->name('createPackage');
     Route::post('/package/create', [PackageController::class, 'store'])->name('storePackage');
@@ -54,10 +62,7 @@ Route::group(['middleware' => ['auth', 'Admin']], function () {
     Route::put('/package/{id}', [PackageController::class, 'update'])->name('updatePackage');
     Route::get('/package/{id}/delete', [PackageController::class, 'destroy'])->name('deletePackage');
 
-    // registerController
-
-
-    // usercontroller
+    // Usercontroller
     Route::get('/user', [UserController::class, 'index'])->name('daftarUser');
     Route::get('/user/create', [UserController::class, 'create'])->name('createUser');
     Route::post('/user/create', [UserController::class, 'store'])->name('storeUser');
@@ -75,8 +80,16 @@ Route::group(['middleware' => ['auth', 'Admin']], function () {
     Route::post('/transaction/{id}/edit', [TransactionController::class, 'update'])->name('updateTransaction');
     Route::get('/transaction/{id}/delete', [TransactionController::class, 'destroy'])->name('deleteTransaction');
 
+
+    // ReportController
+    Route::get('/report', [ReportController::class, 'index'])->name('daftarReport');
+    Route::get('/report/{id}/show', [ReportController::class, 'show'])->name('showReport');
+    Route::get('/report/{id}/delete', [ReportController::class, 'destroy'])->name('deleteReport');
+
+
 });
 
+//Staff
 Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/Staff', [HomeController::class, 'indexstaff'])->name('homestaff');
@@ -90,7 +103,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/customer/{id}/delete', [CustomerController::class, 'destroy'])->name('deleteCustomer');
 
     // PackageController
-
     Route::get('/package', [PackageController::class, 'index'])->name('daftarPackage');
     Route::get('/package/create', [PackageController::class, 'create'])->name('createPackage');
     Route::post('/package/create', [PackageController::class, 'store'])->name('storePackage');
@@ -105,6 +117,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/transaction/{id}/edit', [TransactionController::class, 'edit'])->name('editTransaction');
     Route::post('/transaction/{id}/edit', [TransactionController::class, 'update'])->name('updateTransaction');
     Route::get('/transaction/{id}/delete', [TransactionController::class, 'destroy'])->name('deleteTransaction');
-
 
 });

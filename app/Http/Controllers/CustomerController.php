@@ -16,7 +16,7 @@ class CustomerController extends Controller
 
     public function create()
     {
-        $customers = \App\Models\Customer::all();
+        $customers = Customer::all();
         return view('customer.create', [
         'customers' => $customers
         ]);

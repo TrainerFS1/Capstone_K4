@@ -23,7 +23,7 @@ class TransactionController extends Controller
     public function create()
     {
         $currentDate = Carbon::now();
-        $yearMonth = $currentDate->format('ym');
+        $yearMonth = $currentDate->format('ymdhi');
 
         // Mendapatkan nomor urut terakhir untuk bulan ini
         $lastTransaction = Transaction::where('transactionNumber', 'like', 'LA' . $yearMonth . '%')->latest()->first();
@@ -32,7 +32,7 @@ class TransactionController extends Controller
         $sequence = $lastTransaction ? intval(substr($lastTransaction->transactionNumber, -5)) + 1 : 1;
 
         // Format nomor urut
-        $transactionNumber = 'LA' . $yearMonth . sprintf('%05d', $sequence);
+        $transactionNumber = 'LA' . $yearMonth . sprintf('%03d', $sequence);
 
         $packages = Package::all();
         $customers = Customer::all();
@@ -120,5 +120,13 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($id);
         $transaction->delete();
         return redirect()->route('daftarTransaction')->with('success', 'Transaksi berhasil dihapus.');
+    }
+
+    public function show($id)
+    {
+        $customers = Customer::all();
+        $packages = Package::all();
+        $transaction = Transaction::findOrFail($id);
+        return view('transaction.show', compact('transaction', 'customers', 'packages'));
     }
 }

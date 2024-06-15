@@ -15,6 +15,45 @@
     <link rel="stylesheet" href="{{ asset('css/templatemo-digimedia-v3.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animated.css') }}">
     <link rel="stylesheet" href="{{ asset('css/owl.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <style>
+.floating-btn {
+  z-index: 10000000000000000000000;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #fe639c;
+  color: #fff;
+  border: solid 1px white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.floating-btn1 {
+  z-index: 10000000000000000000000;
+  position: fixed;
+  bottom: 100px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #fe639c;
+  color: #fff;
+  border: solid 1px white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.floating-btn:hover {
+  background-color: #0056b3;
+}
+
+.floating-btn .fas {
+  font-size: 20px;
+}
+</style>
 
   </head>
 
@@ -59,11 +98,22 @@
             </a>
             <!-- ***** Menu End ***** -->
           </nav>
+
         </div>
       </div>
     </div>
   </header>
   <!-- ***** Header Area End ***** -->
+  <a href="{{route('createReport')}}">
+  <button type="button" class="floating-btn btn btn-primary">
+    <i class="fas bi bi-envelope"></i>
+  </button>
+  </a>
+  <a href="https://wa.me/+6282110000000">
+  <button type="button" class="floating-btn1 btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+    <image src="{{ asset('images/whatsapp.svg') }}" alt="Logo" style="height: 20px; width: 20;">
+  </button>
+  </a>
 
   <div class="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
   <div class="container">
@@ -461,5 +511,6 @@
   <script src="{{ asset('assets/js/animation.js') }}"></script>
   <script src="{{ asset('assets/js/imagesloaded.js') }}"></script>
   <script src="{{ asset('assets/js/custom.js') }}"></script>
+  <script src="{{ asset('js/sweetalert.min.js') }}"></script>
 </body>
 </html>

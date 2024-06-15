@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   @yield('addCss')
   <style>
     .dataTables_filter {
@@ -22,7 +24,7 @@
 <div class="wrapper">
 
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+  <nav class="main-header navbar navbar-expand navbar-dark-primary bg-dark">
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
@@ -70,14 +72,14 @@
   @if (auth()->user()->userType == '1') 
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="{{ route('home') }}" class="brand-link">
-      <img src="{{ asset('assets/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">{{ $title ?? "Laundry" }}</span>
+      <img src="{{ asset('images/logo-aja.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="background-color: white">
+      <span class="brand-text font-weight-light">{{ $title ?? "Cucian.ID" }}</span>
     </a>
 
     <div class="sidebar">
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ asset('images/blank-profile-picture.png') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">{{ auth()->user()->userFullName }}</a>
@@ -88,54 +90,43 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item menu-open" id="menu">
                 <a href="#" class="nav-link active" id="menu-link">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                    <p>
-                        Admin Master Data
+                <i class="bi bi-person-circle"></i>
+                    <p>Admin Master Data
                         <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="{{ route('daftarCustomer') }}" class="nav-link {{ Route::is('daftarCustomer') ? 'active' : '' }}" id="customer-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Customer</p>
+                        <i class="bi bi-people-fill"></i>
+                            <p>
+                              Customer</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('daftarPackage') }}" class="nav-link {{ Route::is('daftarPackage') ? 'active' : '' }}" id="package-link">
-                            <i class="far fa-circle nav-icon"></i>
+                        <i class="bi bi-collection-fill"></i>
                             <p>Package</p>
                         </a>
                     </li>
-                </ul>
-                <li class="nav-item">
-                  <a href="{{ route('daftarTransaction') }}" class="nav-link {{ Route::is('daftarTransaction') ? 'active' : '' }}" id="package-link">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Transaksi</p>
-                  </a>
-              </li>
-                
-                <a href="#" class="nav-link" id="menu-link">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                    <p>
-                        Laporan
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <a href="#" class="nav-link" id="menu-link">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                    <p>
-                        Users
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                      <a href="{{ route('daftarUser') }}" class="nav-link {{ Route::is('daftarUser') ? 'active' : '' }}" id="customer-link">
-                          <i class="far fa-circle nav-icon"></i>
-                          <p>User</p>
-                      </a>
-                  </li>
+                    <li class="nav-item">
+                        <a href="{{ route('daftarTransaction') }}" class="nav-link {{ Route::is('daftarTransaction') ? 'active' : '' }}" id="package-link">
+                        <i class="bi bi-cash-stack"></i>
+                            <p>Transaksi</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('daftarUser') }}" class="nav-link {{ Route::is('daftarUser') ? 'active' : '' }}" id="user-link">
+                        <i class="bi bi-person-gear"></i>
+                            <p>User</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('daftarReport') }}" class="nav-link {{ Route::is('daftarReport') ? 'active' : '' }}" id="staff-link"> 
+                        <i class="bi bi-journal-text"></i>
+                            <p>Report</p>
+                        </a>
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -146,14 +137,14 @@
   @elseif (auth()->user()->userType == '2')
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <a href="{{ route('home') }}" class="brand-link">
-      <img src="{{ asset('assets/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">{{ $title ?? "Laundry" }}</span>
+      <img src="{{ asset('images/logo-aja.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="background-color: white">
+      <span class="brand-text font-weight-light">{{ $title ?? "Cucian.ID" }}</span>
     </a>
 
     <div class="sidebar">
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ asset('images/blank-profile-picture.png') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">{{ auth()->user()->userFullName }}</a>
@@ -173,45 +164,22 @@
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
                         <a href="{{ route('daftarCustomer') }}" class="nav-link {{ Route::is('daftarCustomer') ? 'active' : '' }}" id="customer-link">
-                            <i class="far fa-circle nav-icon"></i>
+                        <i class="bi bi-people-fill"></i>
                             <p>Customer</p>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ route('daftarPackage') }}" class="nav-link {{ Route::is('daftarPackage') ? 'active' : '' }}" id="package-link">
-                            <i class="far fa-circle nav-icon"></i>
+                        <i class="bi bi-collection-fill"></i>
                             <p>Package</p>
                         </a>
                     </li>
-                </ul>
-                <li class="nav-item">
-                  <a href="{{ route('daftarTransaction') }}" class="nav-link {{ Route::is('daftarTransaction') ? 'active' : '' }}" id="package-link">
-                      <i class="far fa-circle nav-icon"></i>
+                    <li class="nav-item">
+                      <a href="{{ route('daftarTransaction') }}" class="nav-link {{ Route::is('daftarTransaction') ? 'active' : '' }}" id="package-link">
+                      <i class="bi bi-cash-stack"></i>
                       <p>Transaksi</p>
-                  </a>
-              </li>
-                
-                <a href="#" class="nav-link" id="menu-link">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                    <p>
-                        Laporan
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <a href="#" class="nav-link" id="menu-link">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                    <p>
-                        Users
-                        <i class="right fas fa-angle-left"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                      <a href="{{ route('daftarUser') }}" class="nav-link {{ Route::is('daftarUser') ? 'active' : '' }}" id="customer-link">
-                          <i class="far fa-circle nav-icon"></i>
-                          <p>User</p>
                       </a>
-                  </li>
+                    </li>
                 </ul>
             </li>
         </ul>
