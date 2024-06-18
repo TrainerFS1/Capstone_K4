@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {   
@@ -21,23 +22,23 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi data yang diterima dari form
-        $validatedData = $request->validate([
+        $request->validate([
             'userFullName' => 'required|string|max:255',
-            'userEmail' => 'required|email|unique:users|max:255',
-            'password' => 'required|string|min:6',
+            'userEmail' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
             'userType' => 'required|in:1,2',
         ]);
 
-        $user = new User();
-        $user->userFullName = $request->userFullName;
-        $user->userEmail = $request->userEmail;
-        $user->password = bcrypt($request->password); // Jangan lupa untuk mengenkripsi password
-        $user->userType = $request->userType;
-        $user->save();
+        User::create([
+            'userFullName' => $request->userFullName,
+            'userEmail' => $request->userEmail,
+            'password' => Hash::make($request->password), // Hash the password
+            'userType' => $request->userType,
+        ]);
 
-        return redirect()->route('daftarUser')->with('success', 'User berhasil ditambahkan.');
+        return redirect()->route('indexUser')->with('success', 'User berhasil ditambahkan');
     }
+
 
     public function edit($id)
     {
@@ -58,13 +59,14 @@ class UserController extends Controller
         $user->userFullName = $request->userFullName;
         $user->userEmail = $request->userEmail;
         if ($request->password) {
-            $user->password = bcrypt($request->password);
+            $user->password = Hash::make($request->password); // Hash the password if it's present
         }
         $user->userType = $request->userType;
         $user->save();
 
         return redirect()->route('daftarUser')->with('success', 'User berhasil diperbarui.');
     }
+
 
     public function destroy($id)
     {

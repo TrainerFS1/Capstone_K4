@@ -62,7 +62,6 @@
                                 <th>No.</th>
                                 <th>Nama Produk</th>
                                 <th>Gambar Produk</th>
-                                <th>Deskripsi</th>
                                 <th>Harga</th>
                                 <th>Aksi</th>
                             </tr>
@@ -75,7 +74,6 @@
                                 <td class="text-center">
                                     <img src="{{ asset('/storage/packages/'. $package->packageGambar) }}" class="rounded" style="width: 50px" alt="packageGambar">
                                 </td>
-                                <td>{!! $package->packageDeskripsi !!}</td>
                                 <td>{{ $package->packagePrice }}</td>
                                 <td>
                                     <a href="{{route('editPackage', ['id' => $package->id])}}" class="btn btn-warning btn-sm" role="button">Edit</a>

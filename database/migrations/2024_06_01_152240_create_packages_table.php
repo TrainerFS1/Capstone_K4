@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('packageName');
             $table->string('packageGambar');
-            $table->string('packageDeskripsi');
+            $table->text('packageDeskripsi');
             $table->string('packagePrice');
             $table->timestamps();
         });

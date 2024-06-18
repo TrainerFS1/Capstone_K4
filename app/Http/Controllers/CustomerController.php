@@ -7,12 +7,14 @@ use App\Models\Customer;
 
 class CustomerController extends Controller
 {
+
     public function index()
     {
         $customers = Customer::all();
         $totalCustomers = $customers->count();
         return view('customer.index', ['customers' => $customers, 'totalCustomers' => $totalCustomers]);
     }
+
 
     public function create()
     {

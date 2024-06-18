@@ -17,7 +17,17 @@ class TransactionController extends Controller
         $customers = Customer::all();
         $packages = Package::all();
         $transactions = Transaction::all();
-        return view('transaction.index', compact('transactions', 'users', 'customers', 'packages'));  
+        $transactionTotal = Transaction::sum('transactionTotal');
+        $totalTransactions = $transactions->count();
+        
+        return view('transaction.index', [
+            'transactions' => $transactions,
+            'users' => $users,
+            'customers' => $customers,
+            'packages' => $packages,
+            'totalTransactions' => $totalTransactions,
+            'transactionTotal' => $transactionTotal,
+        ]);
     }
 
     public function create()
@@ -27,26 +37,12 @@ class TransactionController extends Controller
 
         // Mendapatkan nomor urut terakhir untuk bulan ini
         $lastTransaction = Transaction::where('transactionNumber', 'like', 'LA' . $yearMonth . '%')->latest()->first();
-
-        // Jika ada transaksi sebelumnya, tambahkan 1 ke nomor urutnya, jika tidak, mulai dari 1
         $sequence = $lastTransaction ? intval(substr($lastTransaction->transactionNumber, -5)) + 1 : 1;
-
-        // Format nomor urut
         $transactionNumber = 'LA' . $yearMonth . sprintf('%03d', $sequence);
 
         $packages = Package::all();
         $customers = Customer::all();
         $users = User::all();
-
-        // for ($package_id = 1; $package_id <= count($packages); $package_id++) {
-        //     $package = Package::find($package_id);
-        // }
-
-        // for ($i = 1; $i <= count($packages); $i++) {
-        //     if ($i == $package_id) {
-        //         $price = $package->packagePrice;
-        //     }
-        // }
         
         return view('transaction.create', compact('transactionNumber', 'packages', 'customers', 'users',));  
     }
@@ -69,6 +65,9 @@ class TransactionController extends Controller
         $price = Package::find($package_id)->packagePrice;
         $amount = $request->input('amount');
         $transactionTotal = $amount * $price;
+
+        // Dapatkan nama pelanggan berdasarkan customer_id
+        $customerName = Customer::findOrFail($request->input('customer_id'))->customerName;
 
         // Simpan data transaksi baru
         Transaction::create([
@@ -93,27 +92,30 @@ class TransactionController extends Controller
         $packages = Package::all();
         return view('transaction.edit', compact('transaction', 'customers', 'packages'));
     }
-
+    
     public function update(Request $request, $id)
     {
-        // Validasi data yang diterima dari form
+        // Validate the incoming data
         $validatedData = $request->validate([
-            'transactionNumber' => 'required|string|max:255',
             'transactionDateTime' => 'required|date',
+            'package_id' => 'required|integer',
+            'amount' => 'required|integer',
+            'customer_id' => 'required|integer',
             'transactionStatus' => 'required|string|max:255',
             'transactionPaymentMethod' => 'required|integer',
-            'customer_id' => 'required|integer',
-            'package_id' => 'required|integer',
         ]);
-
-        // Dapatkan transaksi yang akan diperbarui
+    
+        // Find the transaction by ID
         $transaction = Transaction::findOrFail($id);
-
-        // Update data transaksi
+    
+        // Update the transaction with validated data
         $transaction->update($validatedData);
-
-        return redirect()->route('daftarTransaction')->with('success', 'Transaksi berhasil diperbarui.');
+    
+        // Redirect back with a success message
+        return redirect()->route('daftarTransaction')->with('success', 'Transaction updated successfully.');
     }
+    
+
 
     public function destroy($id)
     {
@@ -129,4 +131,25 @@ class TransactionController extends Controller
         $transaction = Transaction::findOrFail($id);
         return view('transaction.show', compact('transaction', 'customers', 'packages'));
     }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $transactions = Transaction::where('transactionNumber', 'like', '%' . $keyword . '%')->get();
+
+        return view('transaction.search', compact('transactions'));
+    }
+
+    public function printReceipt($id)
+    {
+        // Logika untuk mengambil data transaksi berdasarkan $id
+        $transaction = Transaction::findOrFail($id);
+
+        // Lakukan proses pencetakan struk di sini
+
+        // Redirect atau kembalikan view untuk menampilkan struk
+        return view('transaction.print-receipt', compact('transaction'));
+    }
+
+
 }

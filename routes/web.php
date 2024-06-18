@@ -63,6 +63,7 @@ Route::group(['middleware' => ['auth', 'Admin']], function () {
     Route::get('/package/{id}/delete', [PackageController::class, 'destroy'])->name('deletePackage');
 
     // Usercontroller
+    Route::get('/users', [UserController::class, 'index'])->name('indexUser');
     Route::get('/user', [UserController::class, 'index'])->name('daftarUser');
     Route::get('/user/create', [UserController::class, 'create'])->name('createUser');
     Route::post('/user/create', [UserController::class, 'store'])->name('storeUser');
@@ -79,12 +80,20 @@ Route::group(['middleware' => ['auth', 'Admin']], function () {
     Route::get('/transaction/{id}/edit', [TransactionController::class, 'edit'])->name('editTransaction');
     Route::post('/transaction/{id}/edit', [TransactionController::class, 'update'])->name('updateTransaction');
     Route::get('/transaction/{id}/delete', [TransactionController::class, 'destroy'])->name('deleteTransaction');
+    Route::put('/transaction/{id}', [TransactionController::class, 'update'])->name('updateTransaction');
+    Route::put('/transaction/{id}', [TransactionController::class, 'update'])->name('transaction.update');
+    Route::get('/transaction/{id}/print-receipt', [TransactionController::class, 'printReceipt'])->name('printReceipt');
+
+
 
 
     // ReportController
     Route::get('/report', [ReportController::class, 'index'])->name('daftarReport');
     Route::get('/report/{id}/show', [ReportController::class, 'show'])->name('showReport');
     Route::get('/report/{id}/delete', [ReportController::class, 'destroy'])->name('deleteReport');
+    
+    Route::get('/search-transaction', [TransactionController::class, 'search'])->name('searchTransaction');
+
 
 
 });
@@ -117,5 +126,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/transaction/{id}/edit', [TransactionController::class, 'edit'])->name('editTransaction');
     Route::post('/transaction/{id}/edit', [TransactionController::class, 'update'])->name('updateTransaction');
     Route::get('/transaction/{id}/delete', [TransactionController::class, 'destroy'])->name('deleteTransaction');
+    Route::put('/transaction/{id}', [TransactionController::class, 'update'])->name('updateTransaction');
+    Route::put('/transaction/{id}', [TransactionController::class, 'update'])->name('transaction.update');
+    Route::get('/transaction/{id}/print-receipt', [TransactionController::class, 'printReceipt'])->name('printReceipt');
 
 });

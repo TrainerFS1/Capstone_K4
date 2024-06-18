@@ -8,7 +8,6 @@
                 <div class="col-md-6 d-flex align-items-center justify-content-center" style="background-color: #c3c3c4;">
                     <div class="text-center">
                         <img src="{{ asset('images/logo-v3fix.png') }}" alt="Logo" class="img-fluid" style="max-height: 200px;">
-                        <h2 style="color: #ffcc33;">{{ config('app.name', 'Laravel') }}</h2>
                     </div>
                 </div>
                 <div class="col-md-6" style="background-color: #fff; padding: 20px;">
@@ -65,31 +64,11 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <!-- <div class="col-8">
-                                    <div class="icheck-primary">
-                                        <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-                                        <label for="agreeTerms">
-                                            I agree to the <a href="#">terms</a>
-                                        </label>
-                                    </div>
-                                </div> -->
                                 <div class="col-4">
                                     <button type="submit" class="btn btn-primary btn-block" style="background-color: #ffcc33; border-color: #ffcc33;">{{ __('Register') }}</button>
                                 </div>
                             </div>
                         </form>
-
-                        <!-- <div class="social-auth-links text-center mb-3">
-                            <p>- OR -</p>
-                            <a href="#" class="btn btn-block btn-primary">
-                                <i class="fab fa-facebook mr-2"></i>
-                                Sign up using Facebook
-                            </a>
-                            <a href="#" class="btn btn-block btn-danger">
-                                <i class="fab fa-google-plus mr-2"></i>
-                                Sign up using Google+
-                            </a>
-                        </div> -->
                         @if (Route::has('login'))
                         <a href="{{ route('login') }}" class="text-center">I already have a membership</a>
                         @endif

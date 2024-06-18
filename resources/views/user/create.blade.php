@@ -27,44 +27,36 @@
             <div class="card border-0 shadow-sm rounded">
                 <div class="card-body">
                     <form action="{{ route('storeUser') }}" method="POST" enctype="multipart/form-data">
-
                         @csrf
                         <div class="form-group">
                             <label class="font-weight-bold">Nama Lengkap</label>
-                            <input type="text" class="form-control @error('userFullName') is-invalid @enderror"
-                                name="userFullName" value="{{ old('userFullName') }}" placeholder="Masukkan Nama Lengkap">
-                            <!-- error message untuk Nama Lengkap -->
+                            <input type="text" class="form-control @error('userFullName') is-invalid @enderror" name="userFullName" value="{{ old('userFullName') }}" placeholder="Masukkan Nama Lengkap">
                             @error('userFullName')
-                            <div class="alert alert-danger mt-2">
-                                {{ $message }}
-                            </div>
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
                             @enderror
                         </div>
-
+                    
                         <div class="form-group">
                             <label class="font-weight-bold">Email</label>
-                            <input type="email" class="form-control @error('userEmail') is-invalid @enderror"
-                                name="userEmail" value="{{ old('userEmail') }}" placeholder="Masukkan Email">
-                            <!-- error message untuk Email -->
+                            <input type="email" class="form-control @error('userEmail') is-invalid @enderror" name="userEmail" value="{{ old('userEmail') }}" placeholder="Masukkan Email">
                             @error('userEmail')
-                            <div class="alert alert-danger mt-2">
-                                {{ $message }}
-                            </div>
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
                             @enderror
                         </div>
-
+                    
                         <div class="form-group">
                             <label class="font-weight-bold">Password</label>
-                            <input type="password" class="form-control @error('password') is-invalid @enderror"
-                                name="password" placeholder="Masukkan Password">
-                            <!-- error message untuk Password -->
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Masukkan Password">
                             @error('password')
-                            <div class="alert alert-danger mt-2">
-                                {{ $message }}
-                            </div>
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
                             @enderror
                         </div>
-
+                    
+                        <div class="form-group">
+                            <label class="font-weight-bold">Konfirmasi Password</label>
+                            <input type="password" class="form-control" name="password_confirmation" placeholder="Masukkan Ulang Password">
+                        </div>
+                    
                         <div class="form-group">
                             <label class="font-weight-bold">Tipe User</label>
                             <select class="form-control @error('userType') is-invalid @enderror" name="userType">
@@ -72,16 +64,14 @@
                                 <option value="2" {{ old('userType') == '2' ? 'selected' : '' }}>Staff Admin</option>
                             </select>
                             @error('userType')
-                            <div class="alert alert-danger mt-2">
-                                {{ $message }}
-                            </div>
+                                <div class="alert alert-danger mt-2">{{ $message }}</div>
                             @enderror
                         </div>
-
+                    
                         <button type="submit" class="btn btn-md btn-primary">SIMPAN</button>
                         <button type="reset" class="btn btn-md btn-warning">RESET</button>
-
                     </form>
+                    
                 </div>
             </div>
         </div>
@@ -93,5 +83,4 @@
 <script>
     CKEDITOR.replace('packageDeskripsi');
 </script>
-
 @endsection

@@ -62,11 +62,10 @@
                                 <th>Tanggal Waktu Transaksi</th>
                                 <th>Status Transaksi</th>
                                 <th>Pembayaran Transaksi</th>
-                                <th>Nama Pengguna</th>
                                 <th>Nama Pelanggan</th>
                                 <th>Nama Paket</th>
                                 <th>Harga Paket</th>
-                                <th>Jumlah</th>
+                                <th>Berat</th>
                                 <th>Total Harga</th>
                                 <th>Aksi</th>
                             </tr>
@@ -85,12 +84,6 @@
                                         <td>Transfer</td>
                                     @endif
                                     
-                                    @foreach ($users as $user)
-                                    @if ($transaction->userEmail == $user->userEmail)
-                                        <td>{{ $user->userFullName }}</td>
-                                    @endif
-                                    @endforeach
-                                    
                                     @foreach ($customers as $customer)
                                     @if ($transaction->customer_id == $customer->id)
                                         <td>{{ $customer->customerName }}</td>
@@ -107,9 +100,19 @@
                                     <td>{{ $transaction->amount}}</td>
                                     <td>{{ $transaction->transactionTotal }}</td>
                                     <td>
-                                        <a href="{{ route('editTransaction', $transaction->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                        <a onclick="confirmDelete(this)" data-url="{{ route('deleteTransaction', ['id' => $transaction->id]) }}" class="btn btn-danger btn-sm" role="button">Hapus</a>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Aksi
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="{{ route('editTransaction', $transaction->id) }}">Edit</a>
+                                                <a class="dropdown-item text-danger" onclick="confirmDelete(this)" data-url="{{ route('deleteTransaction', ['id' => $transaction->id]) }}">Hapus</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" href="{{ route('printReceipt', ['id' => $transaction->id]) }}">Cetak Struk</a>
+                                            </div>
+                                        </div>
                                     </td>
+                                    
                                 </tr>
                             @empty
                                 <tr>

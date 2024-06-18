@@ -78,7 +78,7 @@
         <div class="col-12">
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
-            <a href="index.html" class="logo">
+            <a href="#top" class="logo">
               <img src="{{ asset('images/logo-v3fix.png') }}" alt="Logo" style="height: 50px; width: auto;">
             </a>
             <!-- ***** Logo End ***** -->
@@ -110,7 +110,7 @@
   </button>
   </a>
   <a href="https://wa.me/+6282110000000">
-  <button type="button" class="floating-btn1 btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+  <button type="button" class="floating-btn1 btn btn-success" data-toggle="modal" data-target="#staticBackdrop">
     <image src="{{ asset('images/whatsapp.svg') }}" alt="Logo" style="height: 20px; width: 20;">
   </button>
   </a>
@@ -147,7 +147,7 @@
   </div>
 </div>
 
-  <div id="about" class="about section">
+<div id="about" class="about section">
   <div id="free-quote" class="free-quote">
     <div class="container">
       <div class="row">
@@ -159,20 +159,21 @@
           </div>
         </div>
         <div class="col-lg-8 offset-lg-2 wow fadeIn" data-wow-duration="1s" data-wow-delay="0.8s">
-          <form id="search" action="#" method="GET">
-            <div class="row">
-              <div class="col-lg-4 col-sm-6">
-                <fieldset>
-                  <input name="keyword" type="search" class="form-control" id="keyword" placeholder="No ID Cucian.id....." aria-label="Search">
-                </fieldset>
-              </div>
-              <div class="col-lg-8 col-sm-6">
-                <fieldset>
-                  <button type="submit" class="main-button">Cek Sekarang</button>
-                </fieldset>
-              </div>
-            </div>
-          </form>
+            <form id="search" action="{{ route('searchTransaction') }}" method="GET">
+                <div class="row">
+                    <div class="col-lg-4 col-sm-6">
+                        <fieldset>
+                            <input name="keyword" type="search" class="form-control" id="keyword" placeholder="No ID Cucian.id....." aria-label="Search">
+                        </fieldset>
+                    </div>
+                    <div class="col-lg-8 col-sm-6">
+                        <fieldset>
+                            <button type="submit" class="main-button">Cek Sekarang</button>
+                        </fieldset>
+                    </div>
+                </div>
+            </form>
+            
         </div>
       </div>
     </div>
@@ -208,7 +209,6 @@
                             <div class="down-content">
                                 <h4>{{ $package->packageName }}</h4>
                                 <span>{!! $package->packageDeskripsi !!}</span>
-                                <p style="color: red">Rp. {{ $package->packagePrice }}</p>
                                 
                             </div>
                         </div>
@@ -382,9 +382,9 @@
                                     </li>
                                 </ul>
                                 <div class="add-review">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reviewModal">
+                                    {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reviewModal">
                                         Tambahkan Ulasan
-                                    </button>
+                                    </button> --}}
                                 </div>
                                 {{-- <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -497,7 +497,7 @@
         <div class="row">
             <div class="col-lg-12">
             <p>Copyright © 2024 cucian.id.
-            <br><a href="https://www.gamelab.id/" target="_parent" title="free css templates">Kelompok 4 capstone</a></p>
+            <br><a href="https://www.gamelab.id/" target="_parent" title="free css templates">Kelompok 4 Capstone</a></p>
             </div>
         </div>
         </div>

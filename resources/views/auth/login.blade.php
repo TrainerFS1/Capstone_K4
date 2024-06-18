@@ -1,14 +1,13 @@
 @extends('adminlte.layouts.auth')
 
 @section('content')
-<body class="hold-transition login-page" style="background-color:#1e2c4c ;">
+<body class="hold-transition login-page" style="background-color:#1e2c4c;">
     <div class="login-box" style="width: 700px;">
         <div class="card" style="border-radius: 10px; overflow: hidden;">
             <div class="row no-gutters">
                 <div class="col-md-6 d-flex align-items-center justify-content-center" style="background-color: #c3c3c4;">
                     <div class="text-center">
                         <img src="{{ asset('images/logo-v3fix.png') }}" alt="Logo" class="img-fluid" style="max-height: 200px;">
-                        
                     </div>
                 </div>
                 <div class="col-md-6" style="background-color: #fff;">
@@ -52,32 +51,27 @@
                                         </label>
                                     </div>
                                 </div>
-                                <!-- /.col -->
                                 <div class="col-4">
                                     <button type="submit" class="btn btn-primary btn-block" style="background-color: #ffcc33; border-color: #ffcc33;">{{ __('Login') }}</button>
                                 </div>
-                                <!-- /.col -->
                             </div>
                         </form>
 
                         <div class="social-auth-links text-center mb-3">
-                            <!-- /.social-auth-links -->
                             @if (Route::has('password.request'))
-                            <!-- <p class="mb-1">
-                                <a href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>
-                            </p> -->
+                                <p class="mb-1">
+                                    <a href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>
+                                </p>
                             @endif
                             @if (Route::has('register'))
-                            <!-- <p class="mb-0">
-                                <a href="{{ route('register') }}" class="text-center">{{ __('Register') }}</a>
-                            </p> -->
+                                <p class="mb-0">
+                                    <a href="{{ route('register') }}" class="text-center">{{ __('Register') }}</a>
+                                </p>
                             @endif
                         </div>
-                        <!-- /.login-card-body -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- /.login-box -->
 @endsection

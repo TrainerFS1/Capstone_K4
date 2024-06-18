@@ -72,13 +72,17 @@
                                 <td>{{ $loop->index + 1 }}</td>
                                 <td>{{ $user->userFullName }}</td>
                                 <td>{{ $user->userEmail }}</td>
-                                @if ($user->userType == '1')
-                                <td>Super Admin</td>
-                                @elseif ($user->userType == '2')
-                                <td>Staff Admin</td>
-                                @endif
                                 <td>
-                                    <a href="{{route('editUser', ['id' => $user->id])}}" class="btn btn-warning btn-sm" role="button">Edit</a>
+                                    @if ($user->userType == '1')
+                                        Super Admin
+                                    @elseif ($user->userType == '2')
+                                        Staff Admin
+                                    @else
+                                        Unknown
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ route('editUser', ['id' => $user->id]) }}" class="btn btn-warning btn-sm" role="button">Edit</a>
                                     <a onclick="confirmDelete(this)" data-url="{{ route('deleteUser', ['id' => $user->id]) }}" class="btn btn-danger btn-sm" role="button">Hapus</a>
                                 </td>
                             </tr>
@@ -92,5 +96,4 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-     
 @endsection
